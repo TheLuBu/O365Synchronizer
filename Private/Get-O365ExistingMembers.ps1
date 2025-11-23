@@ -73,7 +73,12 @@
                 }
             }
             if ($GroupIDs.Keys.Count -gt 0) {
-                $UserGroups = Get-MgUserMemberOf -UserId $User.Id -All
+                try {
+                    $UserGroups = Get-MgUserMemberOf -UserId $User.Id -All
+                } catch {
+                    Write-Color -Text "[e] ", "Failed to get groups for user $($User.UserPrincipalName). ", "Error: $($_.Exception.Message)" -Color Yellow, White, Red
+                    continue
+                }
                 if ($UserGroups.Count -eq 0) {
                     continue
                 }
