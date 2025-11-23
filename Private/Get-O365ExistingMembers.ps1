@@ -230,7 +230,12 @@
         :NextUser foreach ($User in $Users) {
             $Entry = $User.Id
             if ($GroupIDs.Keys.Count -gt 0) {
-                $UserGroups = Get-MgContactMemberOf -OrgContactId $User.Id -All
+                try {
+                    $UserGroups = Get-MgContactMemberOf -OrgContactId $User.Id -All
+                } catch {
+                    Write-Color -Text "[e] ", "Failed to get contact memberOf for contact $($User.Id). ", "Error: $($_.Exception.Message)" -Color Yellow, White, Red
+                    continue
+                }
                 if ($UserGroups.Count -eq 0) {
                     continue
                 }
