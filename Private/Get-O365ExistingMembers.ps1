@@ -240,7 +240,7 @@
                     continue
                 }
                 $GroupExclude = $false
-                foreach ($Group in UserGroups) {
+                foreach ($Group in $UserGroups) {
                     if ($GroupIDsExclude.Keys -contains $Group.Id) {
                         $GroupExclude = $true
                         break
